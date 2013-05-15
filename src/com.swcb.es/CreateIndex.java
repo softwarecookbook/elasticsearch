@@ -11,7 +11,7 @@ import org.elasticsearch.indices.InvalidIndexNameException;
 public class CreateIndex {
 
     /**
-     * Create indexName
+     * Creates indexName
      * @return true if index successfully created
      */
     public boolean createIndex(String indexName) {
