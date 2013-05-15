@@ -9,7 +9,7 @@ import org.elasticsearch.indices.IndexAlreadyExistsException;
 import org.elasticsearch.indices.InvalidIndexNameException;
 
 public class CreateIndex {
-    
+
     /**
      * Create indexName
      * @return true on success
@@ -17,7 +17,7 @@ public class CreateIndex {
      */
     public boolean createIndex(String indexName) {
         boolean result = false;
-        
+
         Client client = new TransportClient()
         .addTransportAddress(new InetSocketTransportAddress("localhost", 9300));
 
@@ -35,7 +35,7 @@ public class CreateIndex {
         }
         return result;
     }
-    
+
     public static void main(String[] args) {
         CreateIndex ci = new CreateIndex();
         boolean result = ci.createIndex("twittertest");
