@@ -12,8 +12,7 @@ public class CreateIndex {
 
     /**
      * Create indexName
-     * @return true on success
-     * @throws IndexAlreadyExistsException, InvalidIndexNameException, Exception
+     * @return true if index successfully created
      */
     public boolean createIndex(String indexName) {
         boolean result = false;
