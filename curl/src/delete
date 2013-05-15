@@ -1,0 +1,15 @@
+## A New Post
+
+Delete the index named 'twitter'  
+
+- curl -XDELETE 'http://localhost:9200/twitter/'
+> response: {"ok":true,"acknowledged":true}
+
+Attempting to delete
+
+Delete the type 'tweet' from the index named 'twitter'.  This only deletes the type and not the index.
+
+- curl -XDELETE 'http://localhost:9200/twitter/tweet'
+> response: {"ok":true}
+
+
