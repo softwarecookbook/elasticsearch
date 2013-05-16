@@ -1,0 +1,44 @@
+package com.swcb.es;
+
+import org.elasticsearch.action.admin.indices.refresh.RefreshResponse;
+import org.elasticsearch.client.Client;
+import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.indices.IndexMissingException;
+
+public class IndexRefresh {
+
+    /**
+     * Refresh one or more indices.
+     * Throws IndexMissingException if an index doesn't already exist.
+     * @param indexNames a single index name or an array of index names
+     */
+    public void RefreshIndex(String ... indexNames) {
+        Client client = new TransportClient()
+        .addTransportAddress(new InetSocketTransportAddress("localhost", 9300));
+
+        try {
+            // Will throw an IndexMissingException if an index is not present
+            RefreshResponse refreshResponse = client.admin().indices().
+                    prepareRefresh(indexNames).execute().actionGet();
+            int numShards = refreshResponse.getTotalShards();
+            int numFailedShards = refreshResponse.getFailedShards();
+            int numSuccessfulShards = refreshResponse.getSuccessfulShards();
+            System.out.println("Total shards: " + numShards + ", successful: " + 
+                    numSuccessfulShards + ", failed: " + numFailedShards);
+        } catch(IndexMissingException e) {
+            e.printStackTrace();
+        } catch(Exception e) {
+            e.printStackTrace();
+        } 
+    }
+
+    /**
+     * Test program
+     */
+    public static void main(String[] args) {
+        IndexRefresh ir = new IndexRefresh();
+        ir.RefreshIndex("twittertest");
+        ir.RefreshIndex(new String[] {"twittertest", "twitter"});
+    }
+}
