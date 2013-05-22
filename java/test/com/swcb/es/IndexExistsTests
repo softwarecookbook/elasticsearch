@@ -1,0 +1,51 @@
+package com.swcb.es;
+
+import static org.junit.Assert.*;
+
+import org.elasticsearch.client.Client;
+import org.junit.Test;
+
+public class IndexExistsTest {
+
+    final String INDEX_NAME = "indextest";
+    final String TYPE_NAME = "indextype";
+    final String SAMPLE_DOC = "{\"f1\":\"dog\"}";
+    final String DOC_ID = "1";
+    
+    final String SERVER_ADDRESS = "localhost";
+    final int SERVER_PORT = 9300;
+    
+    @Test
+    public final void testExists() {
+        Client client = ESClient.MakeTransportClient(SERVER_ADDRESS, SERVER_PORT);
+        
+        // Start with a fresh index
+        DeleteIndex.delete(client, INDEX_NAME);
+        CreateIndex.create(client, INDEX_NAME);
+        InsertDocument.insert(client, INDEX_NAME, TYPE_NAME, SAMPLE_DOC, DOC_ID);
+
+        // May need to refresh index before testing
+        boolean res1 = IndexExists.exists(client, INDEX_NAME);
+        assertTrue(res1);
+        boolean res2 = IndexExists.exists(client, INDEX_NAME + "abc"); //unknown
+        assertFalse(res2);
+    }
+
+    @Test
+    public final void testTypeExists() {
+        Client client = ESClient.MakeTransportClient(SERVER_ADDRESS, SERVER_PORT);
+        
+        // Start with a fresh index
+        DeleteIndex.delete(client, INDEX_NAME);
+        CreateIndex.create(client, INDEX_NAME);
+        InsertDocument.insert(client, INDEX_NAME, TYPE_NAME, SAMPLE_DOC, DOC_ID);
+        
+        // Need to refresh index before testing
+        RefreshIndex.refresh(client, INDEX_NAME);
+        boolean res1 = IndexExists.typeExists(client, INDEX_NAME, TYPE_NAME);
+        assertTrue(res1);
+        boolean res2 = IndexExists.typeExists(client, INDEX_NAME, TYPE_NAME + "abc"); //unknown
+        assertFalse(res2);
+    }
+
+}
