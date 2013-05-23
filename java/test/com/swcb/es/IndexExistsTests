@@ -47,5 +47,4 @@ public class IndexExistsTest {
         boolean res2 = IndexExists.typeExists(client, INDEX_NAME, TYPE_NAME + "abc"); //unknown
         assertFalse(res2);
     }
-
 }
