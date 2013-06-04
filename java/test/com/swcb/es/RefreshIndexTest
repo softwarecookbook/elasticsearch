@@ -1,0 +1,30 @@
+package com.swcb.es;
+
+import static org.junit.Assert.*;
+
+import org.elasticsearch.client.Client;
+import org.junit.Test;
+
+public class RefreshIndexTest {
+
+    @Test
+    public final void testRefresh() {
+        Client client = ESClient.MakeTransportClient("localhost", 9300);
+        
+        // Test a single existing index
+        CreateIndex.create(client, "testindex1");
+        boolean res = RefreshIndex.refresh(client, "testindex1");
+        assertTrue(res);
+
+        // Re-test with an array of indices
+        CreateIndex.create(client, "testindex2");
+        res = RefreshIndex.refresh(client, new String[] {"testindex1", "testindex2"});
+        assertTrue(res);
+        
+        // Re-test with a missing index
+        DeleteIndex.delete(client, "testindex3");
+        res = RefreshIndex.refresh(client, new String[] {"testindex1", "testindex2", "testindex3"});
+        assertFalse(res);
+    }
+
+}
