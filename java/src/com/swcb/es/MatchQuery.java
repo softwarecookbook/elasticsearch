@@ -76,25 +76,29 @@ public class MatchQuery {
 
         // This query will match a single word in the document
         MatchQueryBuilder mqb = query("f1", "dog");
-        SearchResponse response = Search.search(client, mqb, new String[] {INDEX_NAME}, new String[] {INDEX_TYPE1});
+        SearchResponse response = 
+            Search.search(client, mqb, new String[] {INDEX_NAME}, new String[] {INDEX_TYPE1});
         SearchHits hits = response.getHits();
         System.out.println("Expected one hit, found: " + (hits.getTotalHits()) + " hits");
         
         // This query will match using a default Boolean AND operator
         mqb = query("f1", DOC1_TEXT);
-        response = Search.search(client, mqb, new String[] {INDEX_NAME}, new String[] {INDEX_TYPE1});
+        response = 
+            Search.search(client, mqb, new String[] {INDEX_NAME}, new String[] {INDEX_TYPE1});
         hits = response.getHits();
         System.out.println("Expected one hit, found: " + (hits.getTotalHits()) + " hits");
 
         // This query will match using a Boolean OR operator
         mqb = query("f1", "fleas ticks");
-        response = Search.search(client, mqb, new String[] {INDEX_NAME}, new String[] {INDEX_TYPE1});
+        response = 
+            Search.search(client, mqb, new String[] {INDEX_NAME}, new String[] {INDEX_TYPE1});
         hits = response.getHits();
         System.out.println("Expected one hit, found: " + (hits.getTotalHits()) + " hits");
 
         // This query will fail using a Boolean AND operator
         mqb = query("f1", "fleas ticks", BOOLEANS.AND);
-        response = Search.search(client, mqb, new String[] {INDEX_NAME}, new String[] {INDEX_TYPE1});
+        response = 
+            Search.search(client, mqb, new String[] {INDEX_NAME}, new String[] {INDEX_TYPE1});
         hits = response.getHits();
         System.out.println("Expected zero hits, found: " + (hits.getTotalHits()) + " hits");
         
