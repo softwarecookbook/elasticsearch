@@ -63,9 +63,7 @@ public class MatchQuery {
     }
       
     /**
-     * Example match query.  A document is parsed into separate words and
-     * added to a new index.  A match query may match one or more words in the
-     * indexed field.
+     * Example match Boolean queries
      */
     public static void main(String[] args) {
         Client client = ESClient.MakeTransportClient("localhost", 9300);
