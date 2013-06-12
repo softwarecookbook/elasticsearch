@@ -1,3 +1,5 @@
+/* See the file "NOTICE" for the full license governing this code. */
+
 package com.swcb.es;
 
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
